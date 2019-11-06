@@ -51,9 +51,11 @@ def remove_words(words_list):
     """
     Remove stop words
     """
-    words_list = [pair.word for pair in words_list if pair.word not in stop_dic and
-                  pair.flag not in ['w', 'ns', 'nr', 't', 'r', 'u', 'e', 'y', 'o']]
-    words_list = [word for word in words_list if len(word) >= 2 or word in single_dic]
+    #words_list = [pair.word for pair in words_list if pair.word not in stop_dic and
+    #              pair.flag not in ['w', 'ns', 'nr', 't', 'r', 'u', 'e', 'y', 'o']]
+    #words_list = [word for word in words_list if len(word) >= 0 or word in single_dic]
+    words_list = [pair.word for pair in words_list]
+    words_list = [word for word in words_list]
 
     return words_list
 
