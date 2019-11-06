@@ -88,11 +88,13 @@ class TextRNN(object):
             fc_b = tf.Variable(tf.zeros([num_classes]), name='fc_b')
             self.logits = tf.matmul(self.final_output, fc_w) + fc_b
             self.logits_softmax = tf.nn.softmax(self.logits)
-            self.predictions = tf.argmax(self.logits, 1, name='predictions')
+            self.predictions = tf.nn.sigmoid(self.logits)#tf.argmax(self.logits, 1, name='predictions')
+
 
         # Calculate cross-entropy loss
         with tf.name_scope('loss'):
-            cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=self.logits, labels=self.input_y)
+            #change here!
+            cross_entropy = tf.nn.sigmoid_cross_entropy_with_logits(logits=self.logits, labels=self.input_y)
             self.loss = tf.reduce_mean(cross_entropy)
 
         # Create optimizer
@@ -104,7 +106,7 @@ class TextRNN(object):
 
         # Calculate accuracy
         with tf.name_scope('accuracy'):
-            correct_pred = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
+            correct_pred = tf.equal(tf.round(tf.sigmoid(self.predictions)), self.input_y) #tf.argmax(self.input_y, 1)) in mutiple classifer
             self.accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
 
 
