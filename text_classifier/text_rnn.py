@@ -88,7 +88,7 @@ class TextRNN(object):
             fc_b = tf.Variable(tf.zeros([num_classes]), name='fc_b')
             self.logits = tf.matmul(self.final_output, fc_w) + fc_b
             self.logits_softmax = tf.nn.softmax(self.logits)
-            self.predictions = tf.nn.sigmoid(self.logits)#tf.argmax(self.logits, 1, name='predictions')
+            self.predictions = tf.argmax(self.logits, 1, name='predictions') #tf.nn.sigmoid(self.logits)
 
 
         # Calculate cross-entropy loss
